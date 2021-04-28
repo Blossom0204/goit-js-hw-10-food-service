@@ -12,27 +12,35 @@ const menuRef = document.querySelector('.js-menu');
 const cardItems = menu(cards);
 menuRef.insertAdjacentHTML('beforeend', cardItems);
 
-const themeRefs = document.querySelector('.theme-switch__toggle');
+const themeRefs = document.querySelector('#theme-switch-toggle');
 
 themeRefs.addEventListener('change', changeThem);
 
-checkTheme();
-
 function changeThem(evt) {
-  document.body.classList.toggle(Theme.LIGHT);
-  document.body.classList.toggle(Theme.DARK);
-  if (evt.target.checked) {
+  if (themeRefs.checked) {
+    darkTheme();
     localStorage.setItem('theme', Theme.DARK);
   } else {
+    lightTheme();
     localStorage.setItem('theme', Theme.LIGHT);
   }
 }
 
-function checkTheme() {
-  if (localStorage.theme === 'Theme.DARK') {
-    document.body.classList.add(Theme.DARK);
-    themeRefs.checked = true;
-  } else {
-    document.body.classList.add(Theme.LIGHT);
+function lightTheme(evt) {
+  document.body.classList.add(Theme.LIGHT);
+  document.body.classList.remove(Theme.DARK);
+}
+
+function darkTheme(evt) {
+  document.body.classList.add(Theme.DARK);
+  document.body.classList.remove(Theme.LIGHT);
+}
+
+function currentThem() {
+  const localTheme  = localStorage.getItem('theme'); 
+  if (localTheme  === Theme.DARK) {
+   document.body.classList.add(Theme.DARK);
+   themeRefs.checked = true;
   }
 }
+currentThem();
